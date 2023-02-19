@@ -3,14 +3,12 @@
     "target": "ESNext",
     "types": ["node"],
     "paths": {
-      "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/components/*"],
-      "@data/*": ["./src/data/*"],
-      "@models/*": ["./src/models/*"],
       "@store/*": ["./src/store/*"],
       "@styles/*": ["./src/styles/*"],
       "@utils/*": ["./src/utils/*"],
       "@pages/*": ["./src/pages/*"],
+      "@types/*": ["./src/types/*"],
       "@/*": ["./src/*"]
     },
     "useDefineForClassFields": true,
