@@ -1,7 +1,9 @@
+import useAuth from "@store/useAuth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PATH from "@utils/routes/PATH";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 interface IForm {
   email: string;
@@ -18,18 +20,19 @@ const Login = () => {
   );
 };
 
-const ReactHookForm = () => {
-  const { API, LOGIN } = PATH;
+const {
+  userEmail: useEmail,
+  userPassowrd: usePassowrd,
+  isAuthenticated,
+} = useAuth;
+const [email, setEmail] = useRecoilState(useEmail);
+const [password, setPassword] = useRecoilState(usePassowrd);
 
+const ReactHookForm = () => {
   const {
     register,
     formState: { errors },
-    watch,
-    reset,
     handleSubmit,
-    getValues,
-    setError,
-    setFocus,
   } = useForm<IForm>({
     mode: "onSubmit",
     defaultValues: {
@@ -38,33 +41,12 @@ const ReactHookForm = () => {
     },
   });
 
-  const { email } = watch();
-  const [emailValues, setEmailValute] = useState("");
-
-  function onEmailChange(evt: React.ChangeEvent<HTMLInputElement>) {
-    const emailValue = getValues("email");
-    setEmailValute(emailValue);
-  }
-
-  // useEffect(() => {
-  //   const data = axios
-  //     .get(`${API}${LOGIN}`)
-  //     .then((res) => res)
-  //     .then((user) => user);
-  //   reset({
-  //     email: data.email,
-  //     password: data.password,
-  //     ...data,
-  //   });
-  // }, []);
-
   const onSubmit = (data: IForm) => {
     data;
   };
 
   return (
     <div className="flex flex-col justify-center items-center w-screen h-screen gap-2">
-      {email === "jyh990605" && <div>장용호님의 아이디 입니다</div>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="flex justify-center gap-4">
           <label className="text-4xl" htmlFor="email">
@@ -84,7 +66,6 @@ const ReactHookForm = () => {
               placeholder="check your email address"
               id="email"
               type="email"
-              onChange={onEmailChange}
             />
             {errors?.email && (
               <p className="text-red-500">{errors.email?.message}</p>
