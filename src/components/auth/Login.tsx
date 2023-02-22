@@ -1,13 +1,12 @@
 import useAuth from "@store/useAuth";
 import { useForm } from "react-hook-form";
-import { useRecoilState } from "recoil";
 
 interface UserAuthState {
   email: string;
   password: string;
 }
 
-const Login = () => {
+const LoginForm = () => {
   const {
     register,
     formState: { errors },
@@ -20,14 +19,9 @@ const Login = () => {
     },
   });
 
-  const { isAuthenticated, userAuth } = useAuth;
-  const [emailPassword, setEmailPassword] = useRecoilState(userAuth);
-
   const onSubmit = (data: UserAuthState) => {
-    setEmailPassword(data);
-    // console.log("보내는 데이터 :", data);
+    console.log("보내는 데이터 :", data);
   };
-
   return (
     <div className="flex flex-col justify-center items-center w-screen h-screen gap-2">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -91,4 +85,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;
