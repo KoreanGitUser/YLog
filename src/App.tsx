@@ -1,8 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import UnAuthRoutes from "@components/routes/UnAuthRoutes";
+import { useLocation } from "react-router-dom";
 
 const App = () => {
-  useEffect(() => {}, []);
+  const location = useLocation();
+  const [currentRoutes, setCurrentRoutes] = useState<React.ReactNode>();
+
+  useEffect(() => {
+    // const currentRoutes  =
+  }, []);
 
   return (
     <div>

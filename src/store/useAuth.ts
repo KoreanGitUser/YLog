@@ -1,24 +1,28 @@
 import { atom, RecoilState, selector, useRecoilValue } from "recoil";
 
 interface AuthState {
-  email: string;
-  password: string;
+  isAuthenticated: RecoilState<boolean>;
+
+  login: (isAuthenticated: RecoilState<boolean>) => boolean;
 }
 
-const useAuth = {
-  userAuth: atom<AuthState>({
-    key: "email",
-    default: {
-      email: "",
-      password: "",
-    },
-  }),
-
+const useAuth: AuthState = {
   isAuthenticated: atom({
     key: "isAuthenticated",
     default: false,
   }),
 
+  login: (isAuthenticated) => {
+    const isAuth = selector({
+      key: "isAuth",
+      get: ({ get }) => {
+        const acceptAuth = !get(isAuthenticated);
+        return acceptAuth;
+      },
+    });
+
+    return useRecoilValue(isAuth);
+  },
   //End of Func
 };
 
