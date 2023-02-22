@@ -1,39 +1,18 @@
 import useAuth from "@store/useAuth";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import PATH from "@utils/routes/PATH";
-import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
-interface IForm {
+interface UserAuthState {
   email: string;
   password: string;
 }
 
-const queryClient = new QueryClient();
-
 const Login = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ReactHookForm />
-    </QueryClientProvider>
-  );
-};
-
-const {
-  userEmail: useEmail,
-  userPassowrd: usePassowrd,
-  isAuthenticated,
-} = useAuth;
-const [email, setEmail] = useRecoilState(useEmail);
-const [password, setPassword] = useRecoilState(usePassowrd);
-
-const ReactHookForm = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<IForm>({
+  } = useForm<UserAuthState>({
     mode: "onSubmit",
     defaultValues: {
       email: "",
@@ -41,8 +20,12 @@ const ReactHookForm = () => {
     },
   });
 
-  const onSubmit = (data: IForm) => {
-    data;
+  const { isAuthenticated, userAuth } = useAuth;
+  const [emailPassword, setEmailPassword] = useRecoilState(userAuth);
+
+  const onSubmit = (data: UserAuthState) => {
+    setEmailPassword(data);
+    // console.log("보내는 데이터 :", data);
   };
 
   return (
