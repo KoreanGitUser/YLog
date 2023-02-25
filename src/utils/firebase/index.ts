@@ -11,7 +11,7 @@ const firebaseConfig = {
   messagingSenderId: env.FIREBASE_MESSAGE_SENDER,
   appId: env.FIREBASE_APP_ID,
   measurementId: env.FIREBASE_MEASUREMENT_ID,
-};
+} as const;
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
