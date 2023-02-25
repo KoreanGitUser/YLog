@@ -4,6 +4,7 @@ const PATH = {
 
   // UnAuthorized
   LOGIN: "/login",
+  SIGN_UP: "sign-up",
 
   // Protected
   HOME: "/",
