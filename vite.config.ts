@@ -19,6 +19,6 @@ export default defineConfig({
   },
   root: ".",
   build: {
-    outDir: "../dist/깃헙 레포지토리 이름",
+    outDir: "../dist/ylog",
   },
 });
