@@ -1,7 +1,7 @@
-import QueruLogin from "@components/auth/Login";
+import Login from "@components/auth/Login";
 
 const LoginPage = () => {
-  return <QueruLogin />;
+  return <Login />;
 };
 
 export default LoginPage;

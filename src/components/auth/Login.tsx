@@ -1,4 +1,5 @@
-import useAuth from "@store/useAuth";
+import { auth } from "@utils/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useForm } from "react-hook-form";
 
 interface UserAuthState {
@@ -6,7 +7,7 @@ interface UserAuthState {
   password: string;
 }
 
-const LoginForm = () => {
+const Login = () => {
   const {
     register,
     formState: { errors },
@@ -20,8 +21,14 @@ const LoginForm = () => {
   });
 
   const onSubmit = (data: UserAuthState) => {
+    // signIn(data);
     console.log("보내는 데이터 :", data);
   };
+
+  const signIn = async (data: UserAuthState) => {
+    await signInWithEmailAndPassword(auth, data.email, data.password);
+  };
+
   return (
     <div className="flex flex-col justify-center items-center w-screen h-screen gap-2">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -85,4 +92,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default Login;
