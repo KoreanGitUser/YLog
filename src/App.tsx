@@ -11,7 +11,7 @@ const App = () => {
   }, []);
 
   return (
-    <div>
+    <div className="w-screen h-screen">
       <UnAuthRoutes />
     </div>
   );
