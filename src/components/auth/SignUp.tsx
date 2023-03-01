@@ -1,7 +1,9 @@
-import { auth } from "@utils/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, googleProvider } from "@utils/firebase";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import PushBtn from "@styles/common/PushBtn";
+import { FcGoogle } from "react-icons/fc";
 
 interface UserAuthState {
   email: string;
@@ -35,7 +37,19 @@ const SignUp = () => {
   );
 
   const signUp = async (data: UserAuthState) => {
-    await createUserWithEmailAndPassword(auth, data.email, data.password);
+    try {
+      await createUserWithEmailAndPassword(auth, data.email, data.password);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const signUpWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // use form pattern
@@ -46,9 +60,9 @@ const SignUp = () => {
   };
 
   const Styles = {
-    input: "border-b-2 w-5/6 border-gray-300 bg-white p-2 px-4 outline-none",
+    input: "border-b-2 w-full border-gray-300 bg-white p-2 px-4 outline-none",
     section: "w-full h-full flex gap-4",
-    label: "text-4xl w-1/2",
+    label: "text-3xl w-1/2",
   };
 
   const { input, section, label } = Styles;
@@ -131,13 +145,18 @@ const SignUp = () => {
             )}
           </article>
         </section>
-        <button
+        <PushBtn
           type="submit"
-          className="text-xl border-2 border-gray-400 p-2 px-4 rounded-md active:scale-95 active:bg-blue-400 duration-150"
+          className="text-xl border-2"
           disabled={!watch("comfirmPassword")}
         >
           Submit
-        </button>
+        </PushBtn>
+        <FcGoogle
+          size="40"
+          className="rounded-full border p-1 cursor-pointer"
+          onClick={signUpWithGoogle}
+        />
       </form>
     </div>
   );
