@@ -10,7 +10,7 @@ const UnAuthRoutes = () => {
     <Routes>
       <Route path={LOGIN} element={<LoginPage />} />
       <Route path={SIGN_UP} element={<SignUp />} />
-      <Route path="*" element={<Navigate replace to={SIGN_UP} />} />
+      <Route path="*" element={<Navigate replace to={LOGIN} />} />
     </Routes>
   );
 };
