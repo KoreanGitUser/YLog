@@ -3,11 +3,11 @@ import PATH from "@utils/routes/PATH";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 const ProtectedRoutes = () => {
-  const { LOGIN } = PATH;
+  const { HOME } = PATH;
   return (
     <Routes>
-      <Route path={LOGIN} element={<MainPage />} />
-      <Route path="*" element={<Navigate replace to={LOGIN} />} />
+      <Route path={HOME} element={<MainPage />} />
+      <Route path="*" element={<Navigate replace to={HOME} />} />
     </Routes>
   );
 };
