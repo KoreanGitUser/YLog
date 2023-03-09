@@ -1,6 +1,12 @@
-import { auth } from "@utils/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import PushBtn from "@styles/common/PushBtn";
+import { auth, googleProvider } from "@utils/firebase";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useForm } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
+import { Link } from "react-router-dom";
+import PATH from "@utils/routes/PATH";
+
+const { SIGN_UP } = PATH;
 
 interface UserAuthState {
   email: string;
@@ -21,7 +27,7 @@ const Login = () => {
   });
 
   const onSubmit = (data: UserAuthState) => {
-    // signIn(data);
+    signIn(data);
     console.log("보내는 데이터 :", data);
   };
 
@@ -29,13 +35,29 @@ const Login = () => {
     await signInWithEmailAndPassword(auth, data.email, data.password);
   };
 
+  const signUpWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const Styles = {
+    input: "border-b-2 w-full border-gray-300 bg-white p-2 px-4 outline-none",
+    section: "w-full h-full flex gap-4",
+    label: "text-3xl w-1/3",
+  };
+
+  const { input, label, section } = Styles;
   return (
-    <div className="flex flex-col justify-center items-center w-screen h-screen gap-2">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <section className="flex justify-center gap-4">
-          <label className="text-4xl" htmlFor="email">
-            Email:
-          </label>
+    <div className="flex flex-col justify-center items-center w-full h-full">
+      <form
+        className="flex flex-col justify-center items-start w-fit min-w-[30%] h-fit p-2 gap-2"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <section className={section}>
+          <label className={label}>Email:</label>
           <article>
             <input
               {...register("email", {
@@ -46,7 +68,7 @@ const Login = () => {
                   message: "올바른 이메일을 입력해주세요",
                 },
               })}
-              className="border-2 p-2 px-4 rounded-md outline-none"
+              className={input}
               placeholder="check your email address"
               id="email"
               type="email"
@@ -56,13 +78,11 @@ const Login = () => {
             )}
           </article>
         </section>
-        <section className="flex justify-center gap-4">
-          <label className="text-4xl" htmlFor="email">
-            Password:
-          </label>
+        <section className={section}>
+          <label className={label}>Password:</label>
           <article>
             <input
-              className="border-2 p-2 px-4 rounded-md outline-none"
+              className={input}
               placeholder="typing your password"
               id="password"
               type="password"
@@ -81,13 +101,21 @@ const Login = () => {
             )}
           </article>
         </section>
-        <button
+        <PushBtn
           type="submit"
           className="text-xl border-2 p-2 px-4 rounded-md active:scale-95 active:bg-blue-400 duration-150"
         >
           Submit
-        </button>
+        </PushBtn>
       </form>
+      <FcGoogle
+        size="40"
+        className="rounded-full border p-1 cursor-pointer"
+        onClick={signUpWithGoogle}
+      />
+      <Link to={SIGN_UP} className="text-2xl underline underline-offset-2">
+        SignUp
+      </Link>
     </div>
   );
 };

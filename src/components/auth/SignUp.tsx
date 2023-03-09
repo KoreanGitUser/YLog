@@ -1,10 +1,17 @@
 import { auth, googleProvider } from "@utils/firebase";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import PushBtn from "@styles/common/PushBtn";
 import { FcGoogle } from "react-icons/fc";
+import PATH from "@utils/routes/PATH";
+import { Link } from "react-router-dom";
 
+const { LOGIN } = PATH;
 interface UserAuthState {
   email: string;
   password: string;
@@ -30,11 +37,6 @@ const SignUp = () => {
     signUp(data);
     console.log("보내는 데이터 :", data);
   };
-
-  useEffect(
-    () => console.log("현재 로그인된 이메일 아이디: ", auth.currentUser?.email),
-    []
-  );
 
   const signUp = async (data: UserAuthState) => {
     try {
@@ -68,10 +70,10 @@ const SignUp = () => {
   const { input, section, label } = Styles;
 
   return (
-    <div className="w-full h-full">
+    <div className="flex flex-col justify-center items-center w-full h-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col justify-center items-start w-fit min-w-[40%] h-fit p-2 gap-2"
+        className="flex flex-col justify-center items-start w-fit min-w-[30%] h-fit p-2 gap-2"
       >
         <section className={section}>
           <label className={label} htmlFor="email">
@@ -152,12 +154,15 @@ const SignUp = () => {
         >
           Submit
         </PushBtn>
-        <FcGoogle
-          size="40"
-          className="rounded-full border p-1 cursor-pointer"
-          onClick={signUpWithGoogle}
-        />
       </form>
+      <FcGoogle
+        size="40"
+        className="rounded-full border p-1 cursor-pointer"
+        onClick={signUpWithGoogle}
+      />
+      <Link to={LOGIN} className="text-2xl underline underline-offset-2">
+        Login
+      </Link>
     </div>
   );
 };
