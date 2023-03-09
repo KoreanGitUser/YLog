@@ -3,6 +3,7 @@ const defaultDropShadows = require("tailwindcss/defaultTheme").dropShadow;
 const defaultBoxShadows = require("tailwindcss/defaultTheme").boxShadow;
 
 module.exports = {
+  darkMode: ["class", '[data-mode="dark"]'],
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
